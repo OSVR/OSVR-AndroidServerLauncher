@@ -6,7 +6,7 @@ Open the project in Android Studio.
 
 Run the assembleDebug gradle task.
 
-Install \app\build\outputs\apk/\app-debug.apk with adb:
+Install /app/build/outputs/apk/app-debug.apk with adb:
 ```
 adb install app-debug.apk)
 ```
