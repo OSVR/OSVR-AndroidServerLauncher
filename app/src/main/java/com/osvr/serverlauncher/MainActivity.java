@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.osvr.android.utils.OSVRFileExtractor;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
@@ -14,16 +16,35 @@ public class MainActivity extends Activity {
 
     private Process process;
 
+    final String serverBin = "/data/data/com.osvr.serverlauncher/files/bin/osvr_server";
+    final String serverDir = "/data/data/com.osvr.serverlauncher/files/bin";
+
+    protected void doChmod() {
+        String[] args = {"chmod", "775", serverBin};
+        ProcessBuilder processBuilder = new ProcessBuilder(args)
+                .directory(new File(serverDir));
+        try {
+            Process chmodProcess = processBuilder.start();
+            chmodProcess.waitFor();
+        } catch(IOException ex) {
+            Log.e("com.OSVR", "Error when starting chmod: " + ex.getMessage());
+        } catch(InterruptedException ex) {
+            Log.e("com.OSVR", "Error when starting process: " + ex.getMessage());
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         try {
-            String[] args = {"/data/data/com.osvr.serverlauncher/files/bin/osvr_server"};
+            OSVRFileExtractor.extractFiles(this);
+            doChmod();
+            String[] args = {serverBin};
             //String[] args = {"/system/bin/ls", "/data/local/tmp/osvr/bin"};
             ProcessBuilder processBuilder = new ProcessBuilder(args)
-                    .directory(new File("/data/data/com.osvr.serverlauncher/files/bin"));
+                    .directory(new File(serverDir));
 
             Map<String, String> environment = processBuilder.environment();
             environment.put("LD_LIBRARY_PATH", "/data/data/com.osvr.serverlauncher/files/lib");
