@@ -1,6 +1,7 @@
 package com.osvr.serverlauncher;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -53,6 +54,17 @@ public class MainActivity extends Activity {
 
         } catch(IOException ex) {
             Log.e("com.OSVR", "Error when starting process: " + ex.getMessage());
+        }
+
+        try {
+            Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.sensics.palace");
+            if(launchIntent != null) {
+                startActivity(launchIntent);
+            } else {
+                Log.e("com.OSVR", "Could not find the package for the VRVideo app, should be com.sensics.palace. Is it installed?");
+            }
+        } catch (Exception ex) {
+            Log.e("com.OSVR", "Error when starting VRVideo app." + ex.getMessage());
         }
     }
 
