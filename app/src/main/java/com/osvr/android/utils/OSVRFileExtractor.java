@@ -24,6 +24,9 @@
  */
 package com.osvr.android.utils;
 
+import android.content.ContextWrapper;
+import android.util.Log;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -33,9 +36,6 @@ import java.util.Enumeration;
 import java.util.Vector;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
-import android.content.ContextWrapper;
-import android.util.Log;
 
 public class OSVRFileExtractor {
     private final static String ZIP_FILTER = "assets";
@@ -68,7 +68,7 @@ public class OSVRFileExtractor {
         }
     }
 
-    private static String getAppRoot(ContextWrapper context) {
+    public static String getAppRoot(ContextWrapper context) {
         return "/data/data/" + context.getPackageName() + "/files";
     }
 

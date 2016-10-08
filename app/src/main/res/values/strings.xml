@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">OSVR Server Launcher</string>
 
+
+    <string name="defaultlaunch">Launch with default config</string>
+    <string name="jsonlaunch">Browse config</string>
+
     <string name="hello_world">The OSVR server started. Wait a little, then launch your app.</string>
     <string name="action_settings">Settings</string>
 </resources>
